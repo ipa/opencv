@@ -570,7 +570,8 @@ void cv::grabCut( InputArray _img, InputOutputArray _mask, Rect rect,
     {
         GCGraph<double> graph;
         assignGMMsComponents( img, mask, bgdGMM, fgdGMM, compIdxs );
-        learnGMMs( img, mask, compIdxs, bgdGMM, fgdGMM );
+        if( mode == GC_INIT_WITH_RECT || mode == GC_INIT_WITH_MASK )
+            learnGMMs( img, mask, compIdxs, bgdGMM, fgdGMM );
         constructGCGraph(img, mask, bgdGMM, fgdGMM, lambda, leftW, upleftW, upW, uprightW, graph );
         estimateSegmentation( graph, mask );
     }
